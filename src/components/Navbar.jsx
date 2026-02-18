@@ -1,6 +1,6 @@
 import { useCart } from '../context/CartContext';
 
-function Navbar({ onViewCart }) {
+function Navbar({ onViewCart, onViewUsers }) {
   const { getCartCount } = useCart();
   const cartCount = getCartCount();
 
@@ -25,6 +25,10 @@ function Navbar({ onViewCart }) {
         <h2 style={{ margin: 0, fontSize: '24px' }}>
           🛍️ Shop Online
         </h2>
+
+        <button onClick={onViewUsers}>
+            View Users
+        </button>
 
         {/* Cart Button */}
         <button

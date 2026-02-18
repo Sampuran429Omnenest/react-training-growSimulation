@@ -4,7 +4,7 @@ import Navbar from './components/Navbar';
 import ProductList from './components/ProductList';
 import ProductDetail from './components/ProductDetail';
 import Cart from './components/Cart';
-
+import UsersList from './components/UsersList';
 function App() {
   const [currentView, setCurrentView] = useState('products');
   const [selectedProductId, setSelectedProductId] = useState(null);
@@ -15,6 +15,9 @@ function App() {
     setCurrentView('detail');
   };
 
+  const handleViewUsers=()=>{
+    setCurrentView("users");
+  }
   const handleBackToProducts = () => {
     setCurrentView('products');
     setSelectedProductId(null);
@@ -31,8 +34,10 @@ function App() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#f5f5f5' }}>
-      <Navbar onViewCart={handleViewCart} />
-      
+      <Navbar onViewCart={handleViewCart} onViewUsers={handleViewUsers} />
+
+      {currentView==="users" && <UsersList/>}
+
       {currentView === 'products' && (
         <ProductList onViewDetails={handleViewDetails} />
       )}
