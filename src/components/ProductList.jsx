@@ -1,11 +1,25 @@
 import { useState,useEffect } from "react";
 import ProductCard from "./ProductCard";
+import useProductSearch from "../hooks/useProductSearch";
+import useWishlist from "../hooks/useWishlist";
 function ProductList({ onViewDetails }) {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('all');
+    const {
+        searchTerm,
+        setSearchTerm,
+        filteredProducts,
+        setFilteredProducts,
+        isSearching
+    }=useProductSearch(products);
+    const {
+        wishlist,
+        toggleWishlist,
+        isWishlisted
+    }=useWishlist(products);
 
     useEffect(() => {
         fetch('https://fakestoreapi.com/products/categories')
@@ -42,7 +56,36 @@ function ProductList({ onViewDetails }) {
     return (
         <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
             <h1>Product Store</h1>
-            
+
+            <div style={{marginBottom:'30px',position:'relative'}}>
+                <input type="text" 
+                placeholder="Search by name,category,description..."
+                value={searchTerm}
+                onChange={(e)=>setSearchTerm(e.target.value)}
+                style={{
+                    width:'100%',
+                    padding:'15px',
+                    fontSize:'16px',
+                    borderRadius:'8px',
+                    border:'2px solid #ddd'
+                }}/>
+                {isSearching && (
+                    <small style={{ position: 'absolute', right: '15px', top: '18px', color: '#0066cc' }}>
+                        Searching...
+                    </small>
+                )}
+            </div>
+
+            {/* <div>
+                {filteredProducts.map((product)=>(
+                    <ProductCard
+                    key={product.id}
+                    product={product}
+                    onViewDetails={onViewDetails}
+                    isLiked={isWishlisted(product.id)}
+                    onToggleLike={()=>toggleWishlist(product.id)}/>
+                ))}
+            </div> */}
             {/* Filter Buttons Div */}
             <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', flexWrap: 'wrap' }}>
                 <button 
@@ -62,18 +105,18 @@ function ProductList({ onViewDetails }) {
                     </button>
                 ))}
             </div>
-
-            {/* Product Grid Div - Moved OUTSIDE the buttons div */}
             <div style={{ 
                 display: 'grid', 
                 gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', 
                 gap: '20px' 
             }}>
-                {products.map((product) => (
+                {filteredProducts.map((product) => (
                     <ProductCard
                         key={product.id}
                         product={product}
                         onViewDetails={onViewDetails}
+                        isLiked={isWishlisted(product.id)}
+                        onToggleLike={()=>toggleWishlist(product.id)}
                     />
                 ))}
             </div>

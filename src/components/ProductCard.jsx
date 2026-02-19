@@ -1,13 +1,15 @@
-function ProductCard({ product, onViewDetails }) {
+function ProductCard({ product, onViewDetails, isLiked, onToggleLike }) {
 return (
     <div style={{
       border: '1px solid #ddd',
       borderRadius: '8px',
       padding: '15px',
       background: 'white',
-      cursor: 'pointer',
-      transition: 'transform 0.2s, box-shadow 0.2s'
+      position: 'relative', 
+      display: 'flex',
+      flexDirection: 'column'
     }}
+
     onMouseOver={(e) => {
       e.currentTarget.style.transform = 'translateY(-5px)';
       e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
@@ -16,8 +18,33 @@ return (
       e.currentTarget.style.transform = 'translateY(0)';
       e.currentTarget.style.boxShadow = 'none';
     }}
-onClick={() => onViewDetails(product.id)}
+    onClick={() => onViewDetails(product.id)}
     >
+      {<button
+      onClick={(e)=>{
+        e.stopPropagation();
+        onToggleLike();
+      }}
+      style={{
+         position: 'absolute',
+          top: '10px',
+          right: '10px',
+          background: 'white',
+          border: '1px solid #eee',
+          borderRadius: '50%',
+          width: '32px',
+          height: '32px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'pointer',
+          fontSize: '18px',
+          zIndex: 10,
+          boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+      }}
+      >
+        {isLiked ? '❤️' : '🤍'}
+        </button>}
       <img
         src={product.image}
         alt={product.title}
