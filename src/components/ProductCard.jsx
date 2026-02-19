@@ -1,4 +1,7 @@
+import useToggle from "../hooks/useToggle";
+
 function ProductCard({ product, onViewDetails, isLiked, onToggleLike }) {
+  const [showDesc,toggleDesc]=useToggle(false);
 return (
     <div style={{
       border: '1px solid #ddd',
@@ -55,6 +58,32 @@ return (
           marginBottom: '10px'
         }}
       />
+      <div>
+        <button
+        onClick={(e)=>{
+          e.stopPropagation();
+          toggleDesc();
+        }}
+        style={{
+        margin: '10px 0',
+        padding: '8px',
+        border: 'none',
+        background: '#f0f0f0',
+        cursor: 'pointer',
+        borderRadius: '5px'
+      }}>
+        {showDesc ? '▲ Hide Description' : '▼ Show Description'}
+        </button>
+        {showDesc &&(
+          <p style={{
+          fontSize: '12px',
+          color: '#555',
+          marginTop: '5px'
+          }}>
+            {product.description}
+          </p>
+        )}
+      </div>
       
       <h3 style={{
         fontSize: '14px',

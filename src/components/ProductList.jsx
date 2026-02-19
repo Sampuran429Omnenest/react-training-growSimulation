@@ -52,7 +52,7 @@ function ProductList({ onViewDetails }) {
 
     if (loading) return <div style={{ padding: '40px', textAlign: 'center' }}><h2>Loading...</h2></div>;
     if (error) return <div style={{ padding: '40px', textAlign: 'center', color: 'red' }}><h2>Error: {error}</h2></div>;
-
+    
     return (
         <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
             <h1>Product Store</h1>

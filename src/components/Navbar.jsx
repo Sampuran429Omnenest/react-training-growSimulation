@@ -26,7 +26,21 @@ function Navbar({ onViewCart, onViewUsers }) {
           🛍️ Shop Online
         </h2>
 
-        <button onClick={onViewUsers}>
+        <button onClick={onViewUsers}
+            style={{
+              padding: '10px 20px',
+              background: 'white',
+              color: '#0066cc',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontSize: '16px',
+              fontWeight: 'bold',
+              position: 'relative',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
+            }}>
             View Users
         </button>
 

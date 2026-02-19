@@ -5,6 +5,7 @@ import ProductList from './components/ProductList';
 import ProductDetail from './components/ProductDetail';
 import Cart from './components/Cart';
 import UsersList from './components/UsersList';
+import BackToTop from './components/BackToTop';
 function App() {
   const [currentView, setCurrentView] = useState('products');
   const [selectedProductId, setSelectedProductId] = useState(null);
@@ -53,6 +54,7 @@ function App() {
       {currentView === 'cart' && (
         <Cart onClose={handleBackToProducts} />
       )}
+      <BackToTop/>
     </div>
   );
 }
