@@ -19,7 +19,9 @@ function Navbar({ onViewCart, onViewUsers }) {
         margin: '0 auto',
         display: 'flex',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        flexWrap:'wrap',
+        gap:'10px'
       }}>
         {/* Logo */}
         <h2 style={{ margin: 0, fontSize: '24px' }}>

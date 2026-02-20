@@ -2,12 +2,19 @@ import { useState,useEffect } from "react";
 import ProductCard from "./ProductCard";
 import useProductSearch from "../hooks/useProductSearch";
 import useWishlist from "../hooks/useWishlist";
+import useWindowSize from "../hooks/useWindowSize";
 function ProductList({ onViewDetails }) {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('all');
+    const {width}=useWindowSize();
+    const getGridColumns=()=>{
+        if (width<480) return '1fr';
+        else if (width<1024) return 'repeat(2,1fr)';
+        else return 'repeat(3,1fr)';
+    };
     const {
         searchTerm,
         setSearchTerm,
@@ -52,7 +59,7 @@ function ProductList({ onViewDetails }) {
 
     if (loading) return <div style={{ padding: '40px', textAlign: 'center' }}><h2>Loading...</h2></div>;
     if (error) return <div style={{ padding: '40px', textAlign: 'center', color: 'red' }}><h2>Error: {error}</h2></div>;
-    
+    if(searchTerm.length>0 && filteredProducts.length===0) return <div style={{ padding: '40px', textAlign: 'center', color: 'red' }}><h2>Error: {error}</h2></div>;
     return (
         <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
             <h1>Product Store</h1>
@@ -107,7 +114,7 @@ function ProductList({ onViewDetails }) {
             </div>
             <div style={{ 
                 display: 'grid', 
-                gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', 
+                gridTemplateColumns: getGridColumns(), 
                 gap: '20px' 
             }}>
                 {filteredProducts.map((product) => (
